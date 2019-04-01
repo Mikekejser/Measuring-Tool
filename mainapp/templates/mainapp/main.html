@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Measure things</title>
+	<style type="text/css">
+		#box {
+			height: 350px;
+			width: 350px;
+			background-color: orange;
+			resize: both;
+			overflow: auto;
+			display:flex;
+    		align-items: center; 
+    		justify-content: center;
+		}
+		#box-height, #box-width {
+			font-size: 40px;
+		}
+
+		button {
+			background-color: orange;
+		}
+
+		#mm {
+			background-color: green;
+		}
+	</style>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<script>
+		let unit = "mm";
+  		let conv_factor = 0.264583;
+		
+		$(document).ready(function(){
+  			$("#box").click(function(){
+
+  				let height = parseInt($(this).css("height"))*conv_factor;
+  				let width = parseInt($(this).css("width"))*conv_factor;
+
+    			$("#box-height").text("Height: " + (Math.round(height * 100) / 100) + unit);
+    			$("#box-width").text("Width: " + (Math.round(width * 100) / 100) + unit);
+  			});
+
+  			$("button").click(function(){
+
+  				unit = $(this).text();
+
+  				if (unit == "mm"){
+  					conv_factor = 0.264583;
+  				} else if (unit == "cm"){
+  					conv_factor = 0.0264583;
+  				} else if (unit == "in"){
+  					conv_factor = 0.010416;
+  				} else if (unit == "px"){
+  					conv_factor = 1;
+  				}
+
+  				$("button").css("background-color", "orange")
+  				$(this).css("background-color", "green")
+
+  				$("#box-height").text()
+  				$("#box-width").text()
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="box"></div>
+	<p>Adjust box size by dragging bottom right corner.</p>
+	<br>
+	<div>
+		<p id="box-height">Height: 92.6mm</p>
+		<p id="box-width">Width: 92.6mm</p>
+	</div>
+	<p>Select a unit below, then click the box.</p>
+	<button id="mm">mm</button>
+	<button id="cm">cm</button>
+	<button id="in">in</button>
+	<button id="px">px</button>
+	<br>
+	<br>
+	<br>
+	<p>***DISCLAIMER: The shown numbers numbers might not be 100% correct, but should be used with a grain of salt***</p>
+</body>
+</html>
